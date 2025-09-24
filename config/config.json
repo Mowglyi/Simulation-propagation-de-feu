@@ -1,0 +1,12 @@
+{
+    "forêt" : {
+        "hauteur": 10,
+        "largeur": 10
+    },
+
+    "probabilité_propagation": 0.5,
+
+    "feu_initial" : [
+        {"x": 3, "y":3}
+    ]
+}
