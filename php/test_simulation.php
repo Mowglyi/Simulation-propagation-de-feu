@@ -1,6 +1,8 @@
 <?php
 require_once 'Simulation.php';
 
+use App\Simulation; 
+
 // Configuration de la simulation
 try{
     $config = [
@@ -8,19 +10,17 @@ try{
             'hauteur' => 5,
             'largeur' => 5
         ],
-        'propagation_probabilite' => 0.5, // Mettez à 1.0 pour tester la propagation maximale
+        'propagation_probabilite' => 1.0, // Mettre à 1.0 pour tester la propagation maximale
         'feu_initial' => [
-            ['x'=> 3, 'y' => 2],
-            ['x'=> 0, 'y' => 3]
+            ['x'=> 3, 'y' => 2]
         ]
     ];
 
     // Créer une instance de Simulation
     $simulation = new Simulation($config);
 
-
-    $etat = 'en_cours';
-    $etape = 0;
+    $etat = 'en_cours'; //Initialisation de l'etat pour que la simulation se lance
+    $etape = 0; //compteur de l'etape permettant de savoir en combien d'étapes la propagation s'est terminée.
 
     echo "Début de la simulation <br>";
 
@@ -29,6 +29,7 @@ try{
         $etat = $result['etat'];
         $etape++;
 
+        //Affichage des propriétés de la simulation
         echo "Etape $etape :<br>";
         echo "etat : $etat<br>";
         echo "Cases en feu : <br>";
