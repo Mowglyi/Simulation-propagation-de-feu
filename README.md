@@ -7,7 +7,7 @@
 - Le projet contient aussi les tests unitaires concernant la logique du back-end du projet.
 - Plusieurs autre fichiers sont présents qui comprennent les dépendances et ffichiers utiles à l'initialisation et au fonctionnement du framework PHPUnit.
 
--Lancement de la simulation : - ouvrir le fichier "index.html" situé dans le dossier /html.
+- Lancement de la simulation : - ouvrir le fichier "index.html" situé dans le dossier /html.
                               - Pour lancer la simulation appuyer sur le bouton "Simuler".
                               - La simulation rend le résultat final de la simulation.
                               
