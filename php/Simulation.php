@@ -122,8 +122,8 @@ Class Simulation{
 
     }
 
-    private function getGrilleForet()
-    {   //Permet de récupérer la grille simulant la forêt
+    public function getGrilleForet()
+    {   /*//Permet de récupérer la grille simulant la forêt
         if ($this->simulation === null) { //Vérifie que la grille de la forêt existe bien 
         throw new \Exception("Aucune instance de Simulation fournie");
         }
@@ -132,6 +132,8 @@ Class Simulation{
         $property = $reflection->getProperty('grille_foret'); //Récupère la propriété de la grille simulant la forêt
         $property->setAccessible(true); //Permet de pouvoir modifier la grille depuis l'exterieur de la classe.
         return $property->getValue($this->simulation); //Renvoie la propriété grille_foret de la simulation.
+        */
+        return $this->grille_foret;
     }
 
 }

@@ -1,7 +1,7 @@
 {
     "foret" : {
-        "hauteur": 10,
-        "largeur": 10
+        "hauteur": 5,
+        "largeur": 5
     },
 
     "propagation_probabilite": 0.5,

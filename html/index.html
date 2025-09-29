@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation de propagation de feu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 class="title">Simulation de propagation de feu</h1>
+    <div class="simulation-step" id="simulationStep">Étape : 0</div>
+    <div class="grid" id="forestGrid">
+        <!-- La grille sera ajouté ici avec javascript -->
+
+    </div>
+    <button id="simuler">Simuler</button>
+    <script>
+
+        const grid = document.getElementById('forestGrid'); //Sélectionne l'élément contenant  la grille de la forêt
+        const simulationStep = document.getElementById('simulationStep'); //Sélectionne l'élément affichant l'étape de la simulation
+        const simulationBouton = document.getElementById('simuler'); //Sélectionne le bouton lançant la simulation
+        
+        // Fonction pour mettre à jour la grille
+        function updateGrid(data, step) {
+            grid.innerHTML = ''; //Vide la le contenu de la grille 
+            // Mettre à jour le style de la grille avec les dimensions de la forêt
+            grid.style.gridTemplateColumns = `repeat(${data.largeur}, 50px)`;
+            grid.style.width = `${data.largeur * 50}px`;
+
+            // Vérifier que data.foret est bien un tableau
+            if (Array.isArray(data.foret)) {
+                data.foret.forEach(row => {
+                    // Vérifier que chaque ligne est bien un tableau
+                    if (Array.isArray(row)) {
+                        row.forEach(cell => {
+                            const cellElement = document.createElement('div');
+                            cellElement.className = 'cell';
+                            if (cell === 0) {
+                                cellElement.textContent = '🌳';
+                                cellElement.classList.add('tree');
+                            } else if (cell === 1) {
+                                cellElement.textContent = '🔥';
+                                cellElement.classList.add('fire');
+                            } else if (cell === 2) {
+                                cellElement.textContent = '🌫️';
+                                cellElement.classList.add('burnt');
+                            }
+                            grid.appendChild(cellElement);
+                        });
+                    } else {
+                        console.error('Erreur: une ligne de la forêt n\'est pas un tableau', row);
+                    }
+                });
+            } else {
+                console.error('Erreur: data.foret n\'est pas un tableau', data.foret);
+            }
+            simulationStep.textContent = `Étape : ${step}`;
+        }
+        function recuperationInitiale(){
+            fetch("../php/api.php") //Effectue une requête GET à l'API 
+
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+
+            .then(text => {
+                console.log('Raw response:', text);
+                try {
+                    const data = JSON.parse(text); //Parse la reponse au format JSON
+                    if (data.error) {
+                        console.error('Erreur:', data.error);
+                        return;
+                    }
+                    updateGrid(data, 0);
+                } catch (error) {
+                    console.error('Erreur de parsing JSON:', error);
+                    console.error('Response text:', text);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+        }
+        function recuperation(step){
+            fetch("../php/api.php", {
+                method : "POST", 
+                headers:{"Content-Type" : "application.json",}, 
+                body : JSON.stringify({step: -1})
+            }) //Envoie une requête POST à l'API 
+
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(text => {
+                console.log('Raw response:', text);
+                try {
+                    const data = JSON.parse(text);
+                    if (data.error) {
+                        console.error('Erreur:', data.error);
+                        return;
+                    }
+                    updateGrid(data, data.step);
+                } catch (error) {
+                    console.error('Erreur de parsing JSON:', error);
+                    console.error('Response text:', text);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+        }
+
+        // Met à jour la grille avec les données initiales
+        recuperationInitiale();
+
+        // Ajouter un listener pour le bouton "Simuler"
+        simulationBouton.addEventListener('click', recuperation);
+    </script>
+</body>
+</html>

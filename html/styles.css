@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333;
+}
+
+.simulation-step {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #555;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 50px);
+    grid-gap: 0px;
+    margin: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none; /*1px solid #ccc;*/
+    font-size: 24px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.cell.tree {
+    color: green;
+}
+
+.cell.fire {
+    color: red;
+}
+
+.cell.burnt {
+    color: gray;
+}
